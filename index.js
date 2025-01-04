@@ -4,14 +4,10 @@
 // @version      1.1.0
 // @author       SoHeil
 // @match        https://www.youtube.com/watch?*
-// @match        https://www.youtube.com/shorts/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
-
-window.ytplayer = {};
-window._yt_player = {};
 
 const configs = ytcfg.d();
 configs['WEB_PLAYER_CONTEXT_CONFIGS'] = {};
@@ -101,9 +97,61 @@ ytcfg.set(configs);
         }
     }
 
+    function stopMediaElements() {
+        const mediaElements = document.querySelectorAll('video, audio');
+        mediaElements.forEach((media) => {
+            media.pause();
+            media.currentTime = 0;
+            media.remove();
+        });
+    
+        if (window.AudioContext || window.webkitAudioContext) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            const originalAudioContext = AudioContext.prototype;
+    
+            AudioContext.prototype.createBufferSource = function() {
+                const source = originalAudioContext.createBufferSource.call(this);
+                source.stop = function() {
+                    console.log('🔇 Stopped Web Audio API source');
+                    originalAudioContext.stop.call(this);
+                };
+                return source;
+            };
+    
+            const contexts = [];
+            const originalCreateContext = AudioContext.prototype.constructor;
+            AudioContext.prototype.constructor = function() {
+                const context = new originalCreateContext();
+                contexts.push(context);
+                return context;
+            };
+    
+            contexts.forEach((context) => {
+                context.close().then(() => {
+                    console.log('🔇 Closed Web Audio API context');
+                });
+            });
+        }
+    
+        if (window.MediaSource) {
+            const originalMediaSource = window.MediaSource;
+            window.MediaSource = function() {
+                const mediaSource = new originalMediaSource();
+                mediaSource.endOfStream = function() {
+                    console.log('🔇 Stopped MediaSource stream');
+                    originalMediaSource.prototype.endOfStream.call(this);
+                };
+                return mediaSource;
+            };
+        }
+    
+        console.log('🔇 Stopped all audio and video elements, Web Audio API, and MediaSource');
+    }
+
     function init() {
-        window.addEventListener('yt-navigate-finish', () => replacePlayer());
         console.log('🚀 YouTube player bypass script initialized');
+        stopMediaElements();
+        window.addEventListener('yt-navigate-finish', () => replacePlayer());
     }
 
     init();

@@ -1,45 +1,75 @@
 # YouTube Player Bypass Script
 
-A Tampermonkey userscript that modifies YouTube's video player by replacing it with an embedded iframe player.
+A Tampermonkey userscript that replaces YouTube's default video player with an embedded iframe player. This script is designed to bypass certain restrictions, such as the 59-second limit, and provide a more customizable viewing experience.
+
+---
 
 ## ⚠️ Disclaimer
 
-This script is provided for educational purposes only. Using this script might violate YouTube's Terms of Service. Use at your own discretion.
+This script is provided for educational purposes only. Using this script may violate YouTube's Terms of Service. Use it at your own discretion.
 
-## 📋 Prerequisites
+---
 
-- [Tampermonkey](https://www.tampermonkey.net/) browser extension installed
-- Compatible web browsers: Chrome, Firefox, Edge, Safari
+## 📋 Features
 
-## 💻 Installation
+- Replaces YouTube's default player with an embedded iframe player.
+- Bypasses restrictions like the 59-second limit.
+- Customizable player settings (e.g., autoplay, quality, language).
+- Retry mechanism for robust player replacement.
+- Lightweight and easy to use.
 
-1. Install the Tampermonkey extension for your browser
-2. Create a new script in Tampermonkey
-3. Copy and paste the script code
-4. Save the script (Ctrl+S or Command+S)
+---
 
-## 🔧 Usage
+## 🛠️ Installation
 
-The script automatically activates when you visit any YouTube video page (URLs matching `https://www.youtube.com/watch?*`).
+1. **Install Tampermonkey**:
+   - Install the [Tampermonkey extension](https://www.tampermonkey.net/) for your browser (Chrome, Firefox, Edge, Safari).
 
-## ⚙️ Technical Details
+2. **Create a New Script**:
+   - Open the Tampermonkey dashboard.
+   - Click on the **"Create a new script"** button.
 
-The script works by:
-1. Clearing YouTube's default player configurations
-2. Listening for page navigation events
-3. Extracting the video ID from the URL
-4. Removing the original player elements
-5. Creating an iframe with the embedded player
+3. **Copy and Paste the Script**:
+   - Replace the default template with the script provided below.
+
+4. **Save the Script**:
+   - Save the script by pressing `Ctrl+S` (Windows/Linux) or `Command+S` (Mac).
+
+5. **Visit YouTube**:
+   - Navigate to any YouTube video page (e.g., `https://www.youtube.com/watch?v=example`).
+   - The script will automatically replace the default player with an embedded iframe player.
+
+---
+
+## ⚙️ Configuration
+
+The script includes a `CONFIG` object that allows you to customize its behavior:
+
+- **`PLAYER_SELECTOR`**: The CSS selector for the player container.
+- **`RETRY_ATTEMPTS`**: Number of retries if the player container is not found.
+- **`RETRY_DELAY`**: Delay (in milliseconds) between retries.
+- **`DEFAULT_QUALITY`**: Default video quality (e.g., `hd1080`).
+- **`IFRAME_STYLES`**: Custom styles for the iframe player.
+
+---
 
 ## 🐛 Known Issues
 
-- May need adjustments if YouTube updates their player structure
-- Some YouTube features might not be available in embedded player mode
+- Some YouTube features (e.g., annotations, live chat) may not work in the embedded player.
+- The script may need updates if YouTube changes its player structure.
 
-## 👥 Contributing
+---
 
-Feel free to open issues or submit pull requests with improvements.
+## 🤝 Contributing
+
+Contributions are welcome! If you have suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
+
+---
 
 ## 📝 License
 
-This project is open source and available under the MIT License.
+This project is open source and available under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+Enjoy a better YouTube experience! 🎉
