@@ -1,4 +1,4 @@
-# YouTube Player Bypass Script
+# YouTube Player Bypass
 
 A Tampermonkey userscript that replaces YouTube's default video player with an embedded iframe player. This script is designed to bypass certain restrictions, such as the 59-second limit, and provide a more customizable viewing experience.
 
